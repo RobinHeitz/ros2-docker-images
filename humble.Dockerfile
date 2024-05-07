@@ -24,9 +24,14 @@ RUN apt-get -qq update && apt-get -qq upgrade -y && apt-get install -y \
 
 RUN rm -rf /var/lib/apt/lists/*
 
-WORKDIR /ros2_ws
+WORKDIR /ros2_stuff
 
-RUN mkdir src && git clone -b humble https://github.com/UniversalRobots/Universal_Robots_ROS2_Gazebo_Simulation.git src/Universal_Robots_ROS2_Gazebo_Simulation
+RUN mkdir -p ws_humble/src && git clone -b humble https://github.com/UniversalRobots/Universal_Robots_ROS2_Gazebo_Simulation.git ws_humble/src/Universal_Robots_ROS2_Gazebo_Simulation
+
+RUN sudo chmod 777 -R .
+
+
+WORKDIR /ros2_stuff/ws_humble
 
 ENV NVIDIA_VISIBLE_DEVICES \
     ${NVIDIA_VISIBLE_DEVICES:-all}
