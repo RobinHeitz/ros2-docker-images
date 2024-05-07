@@ -14,5 +14,6 @@ jobs:
         run: | 
           docker login --username robinheitz --password ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }} ghcr.io
           docker build . -f humble.Dockerfile --tag ghcr.io/robinheitz/ros2-humble:ur
-          docker push ghcr.io/robinheitz/hello-world-ghcr:latest
+          docker push ghcr.io/robinheitz/ros2-humble:ur
+
 
