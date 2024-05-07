@@ -1,0 +1,18 @@
+name: Docker Image CI for ros2 Humble
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_publish_humble:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build and push the image
+        run: | 
+          docker login --username robinheitz --password ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }} ghcr.io
+          docker build . --tag ghcr.io/robinheitz/hello-world-ghcr:latest
+          docker push ghcr.io/robinheitz/hello-world-ghcr:latest
+
