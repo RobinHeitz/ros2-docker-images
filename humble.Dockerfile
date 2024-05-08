@@ -1,5 +1,5 @@
 ARG ROS_DISTRO=humble
-ARG WORKSPACE=ws_humble
+# ARG WORKSPACE=ws_humble
 
 FROM ros:${ROS_DISTRO}
 
@@ -27,12 +27,12 @@ RUN rm -rf /var/lib/apt/lists/*
 
 WORKDIR /ros_stuff
 
-RUN mkdir -p ${WORKSPACE}/src && git clone -b humble https://github.com/UniversalRobots/Universal_Robots_ROS2_Gazebo_Simulation.git ${WORKSPACE}/src/Universal_Robots_ROS2_Gazebo_Simulation
+RUN mkdir -p ws_ros/src && git clone -b humble https://github.com/UniversalRobots/Universal_Robots_ROS2_Gazebo_Simulation.git ws_ros/src/Universal_Robots_ROS2_Gazebo_Simulation
 
 RUN sudo chmod 777 -R .
 
 
-WORKDIR /ros_stuff/${WORKSPACE}
+WORKDIR /ros_stuff/ws_ros
 
 ENV NVIDIA_VISIBLE_DEVICES \
     ${NVIDIA_VISIBLE_DEVICES:-all}
