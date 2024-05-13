@@ -19,6 +19,8 @@ RUN rm -rf /var/lib/apt/lists/*
 
 WORKDIR /ros_stuff
 
+RUN mkdir -p ws_ros/src && touch ws_ros/src/test.file
+
 # RUN mkdir -p ws_ros/src && git clone -b humble https://github.com/UniversalRobots/Universal_Robots_ROS2_Gazebo_Simulation.git ws_ros/src/Universal_Robots_ROS2_Gazebo_Simulation
 
 RUN sudo chmod 777 -R .
