@@ -1,5 +1,7 @@
 # Docker images to use with ros2 humble + VSCodes devcontainers
 
+See other branches for different ros versions (like noetic)
+
 ## Setup
 
 In your project's root directory, create a file `.devcontainer/devcontainer.json` and add the following content to it:
@@ -8,7 +10,7 @@ In your project's root directory, create a file `.devcontainer/devcontainer.json
 {
 	"name": "ros2-humble",
 	"privileged": true,
-    "image": "ghcr.io/robinheitz/ros2-humble:ur",
+    "image": "ghcr.io/robinheitz/ros-humble:ur",
 	"workspaceFolder": "/ros_stuff",
 	"runArgs": [
 		"--name",
