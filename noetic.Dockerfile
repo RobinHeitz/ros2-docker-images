@@ -1,4 +1,4 @@
-ARG ROS_DISTRO=humble
+ARG ROS_DISTRO=noetic
 
 FROM ros:${ROS_DISTRO}
 
@@ -20,6 +20,7 @@ RUN apt-get -qq update && apt-get -qq upgrade -y && apt-get install -y \
     python3-pip \
     software-properties-common \
     python3-colcon-common-extensions \
+    python3-catkin-tools \
     python3-rosdep \
     ros-${ROS_DISTRO}-rqt* \
     ros-${ROS_DISTRO}-moveit \
@@ -27,11 +28,28 @@ RUN apt-get -qq update && apt-get -qq upgrade -y && apt-get install -y \
     ros-${ROS_DISTRO}-moveit-setup-assistant \
     ros-${ROS_DISTRO}-joint-state-publisher \
     ros-${ROS_DISTRO}-joint-state-publisher-gui \
-    ros-${ROS_DISTRO}-ros2-control \
-    ros-${ROS_DISTRO}-ros2-controllers \
-    ros-${ROS_DISTRO}-ur \
-    ros-${ROS_DISTRO}-gazebo-ros-pkgs \
-    ros-${ROS_DISTRO}-gazebo-ros2-control
+    ros-${ROS_DISTRO}-robot-state-publisher \
+    ros-${ROS_DISTRO}-trac-ik-kinematics-plugin \
+    ros-${ROS_DISTRO}-industrial-robot-status-interface \
+    ros-${ROS_DISTRO}-controller-manager \
+    ros-${ROS_DISTRO}-pass-through-controllers \
+    ros-${ROS_DISTRO}-scaled-joint-trajectory-controller \
+    ros-${ROS_DISTRO}-speed-scaling-interface \
+    ros-${ROS_DISTRO}-speed-scaling-state-controller \
+    ros-${ROS_DISTRO}-ur-client-library \
+    ros-${ROS_DISTRO}-ur-msgs \
+    ros-${ROS_DISTRO}-cartesian-trajectory-controller \
+    ros-${ROS_DISTRO}-force-torque-sensor-controller \
+    ros-${ROS_DISTRO}-industrial-robot-status-controller \
+    ros-${ROS_DISTRO}-joint-state-controller \
+    ros-${ROS_DISTRO}-joint-trajectory-controller \
+    ros-${ROS_DISTRO}-twist-controller \
+    ros-${ROS_DISTRO}-velocity-controllers \
+    ros-${ROS_DISTRO}-tf-conversions \
+    ros-${ROS_DISTRO}-effort-controllers \
+    ros-${ROS_DISTRO}-gazebo-ros \
+    ros-${ROS_DISTRO}-gazebo-ros-control \
+    ros-${ROS_DISTRO}-position-controllers
 
 RUN rm -rf /var/lib/apt/lists/*
 
@@ -76,7 +94,6 @@ RUN  echo "alias ll='ls -al'" >> /home/$USERNAME/.bashrc
 RUN  echo "alias cl=clear" >> /home/$USERNAME/.bashrc
 
 # ROS shortcuts
-RUN  echo "alias b='cd ${ROS_WS} && colcon build --symlink-install && source install/setup.bash'" >> /home/$USERNAME/.bashrc
-RUN  echo "alias clean='rm -r ${ROS_WS}/build ${ROS_WS}/install ${ROS_WS}/log'" >> /home/$USERNAME/.bashrc
+RUN  echo "alias b='cd ${ROS_WS} && catkin build && source devel/setup.bash'" >> /home/$USERNAME/.bashrc
 RUN  echo "alias depc='sudo rosdep update && sudo rosdep check --from-paths ${ROS_WS}/src --ignore-src -y'" >> /home/$USERNAME/.bashrc
 RUN  echo "alias depi='sudo rosdep update && sudo rosdep install --from-paths ${ROS_WS}/src --ignore-src -y'" >> /home/$USERNAME/.bashrc

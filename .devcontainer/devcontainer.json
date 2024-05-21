@@ -1,10 +1,10 @@
 {
-    "name": "ROS 2 Development Container",
+    "name": "ROS 1 Development Container",
     "privileged": true,
     "remoteUser": "ros",
     "containerUser": "ros",
     "build": {
-        "dockerfile": "../humble.Dockerfile",
+        "dockerfile": "../noetic.Dockerfile",
         "context": ".."
     },
     "workspaceFolder": "/home/ros/ros_ws",

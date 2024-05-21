@@ -1,9 +1,9 @@
-name: Docker Image CI for ros2 Humble
+name: Docker Image CI for ros1 noetic 
 
 on:
   push:
     branches:
-      - main
+      - noetic
 
 jobs:
   build_and_publish_humble:
@@ -13,7 +13,7 @@ jobs:
       - name: Build and push the image
         run: | 
           docker login --username robinheitz --password ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }} ghcr.io
-          docker build . -f humble.Dockerfile --tag ghcr.io/robinheitz/ros:humble
-          docker push ghcr.io/robinheitz/ros:humble
+          docker build . -f noetic.Dockerfile --tag ghcr.io/robinheitz/ros:noetic
+          docker push ghcr.io/robinheitz/ros:noetic
 
 
