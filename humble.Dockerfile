@@ -1,11 +1,21 @@
 ARG ROS_DISTRO=humble
-# ARG WORKSPACE=ws_humble
 
 FROM ros:${ROS_DISTRO}
 
+ARG ROS_WS=ros_ws
+
+RUN apt-get -qq update && apt-get -qq upgrade -y && apt-get install -y \
+    curl \
+    unzip
+
+WORKDIR /nvim-app
+RUN curl -LO https://github.com/neovim/neovim/releases/download/v0.10.0/nvim-linux64.tar.gz
+RUN tar xzvf nvim-linux64.tar.gz && rm nvim-linux64.tar.gz
+RUN ln -s /nvim-app/nvim-linux64/bin/nvim /usr/local/bin
+
 #install binary dependencies
 RUN apt-get -qq update && apt-get -qq upgrade -y && apt-get install -y \
-    nano \
+    git \
     v4l-utils \
     python3-pip \
     software-properties-common \
@@ -24,15 +34,6 @@ RUN apt-get -qq update && apt-get -qq upgrade -y && apt-get install -y \
     ros-${ROS_DISTRO}-gazebo-ros2-control
 
 RUN rm -rf /var/lib/apt/lists/*
-
-WORKDIR /ros_stuff
-
-RUN mkdir -p ws_ros/src && git clone -b humble https://github.com/UniversalRobots/Universal_Robots_ROS2_Gazebo_Simulation.git ws_ros/src/Universal_Robots_ROS2_Gazebo_Simulation
-
-RUN sudo chmod 777 -R .
-
-
-WORKDIR /ros_stuff/ws_ros
 
 ENV NVIDIA_VISIBLE_DEVICES \
     ${NVIDIA_VISIBLE_DEVICES:-all}
@@ -60,8 +61,22 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && echo "source /usr/share/bash-completion/completions/git" >> /home/$USERNAME/.bashrc \
     && echo "if [ -f /opt/ros/${ROS_DISTRO}/setup.bash ]; then source /opt/ros/${ROS_DISTRO}/setup.bash; fi" >> /home/$USERNAME/.bashrc
 
-RUN usermod -aG video ${USERNAME}
+USER ${USERNAME}
+
+RUN mkdir -p /home/${USERNAME}/${ROS_WS}/src
+
+ENV ROS_DISTRO=$ROS_DISTRO
+ENV ROS_WS=/home/${USERNAME}/${ROS_WS}
 
 RUN echo "export DISABLE_AUTO_TITLE=true" >> /home/$USERNAME/.bashrc
 RUN echo 'LC_NUMERIC="en_US.UTF-8"' >> /home/$USERNAME/.bashrc
-RUN echo "source /opt/ros/humble/setup.bash" >> /home/$USERNAME/.bashrc
+
+# Some shortcuts
+RUN  echo "alias ll='ls -al'" >> /home/$USERNAME/.bashrc
+RUN  echo "alias cl=clear" >> /home/$USERNAME/.bashrc
+
+# ROS shortcuts
+RUN  echo "alias b='cd ${ROS_WS} && colcon build --symlink-install && source install/setup.bash'" >> /home/$USERNAME/.bashrc
+RUN  echo "alias clean='rm -r ${ROS_WS}/build ${ROS_WS}/install ${ROS_WS}/log'" >> /home/$USERNAME/.bashrc
+RUN  echo "alias depc='sudo rosdep update && sudo rosdep check --from-paths ${ROS_WS}/src --ignore-src -y'" >> /home/$USERNAME/.bashrc
+RUN  echo "alias depi='sudo rosdep update && sudo rosdep install --from-paths ${ROS_WS}/src --ignore-src -y'" >> /home/$USERNAME/.bashrc

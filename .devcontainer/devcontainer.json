@@ -1,0 +1,21 @@
+{
+    "name": "ROS 2 Development Container",
+    "privileged": true,
+    "remoteUser": "ros",
+    "containerUser": "ros",
+    "build": {
+        "dockerfile": "../humble.Dockerfile",
+        "context": ".."
+    },
+    "workspaceFolder": "/home/ros/ros_ws",
+    "workspaceMount": "source=${localWorkspaceFolder}/ros_ws/src,target=/home/ros/ros_ws/src,type=bind",
+    "containerEnv": {
+        "DISPLAY": "unix:0",
+        "ROS_LOCALHOST_ONLY": "1",
+        "ROS_DOMAIN_ID": "42"
+    },
+    "runArgs": [
+        "--net=host",
+        "-e", "DISPLAY=${env:DISPLAY}"
+    ]
+}
