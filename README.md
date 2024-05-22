@@ -6,8 +6,9 @@ Pull images:
 
 Available tags:
 
-- humble
+- melodic
 - noetic
+- humble
 
 ## Setup
 
@@ -24,7 +25,7 @@ Copy the content into .devcontainer/devcontainer.json:
     "privileged": true,
     "remoteUser": "ros",
     "containerUser": "ros",
-    "image":"ghcr.io/robinheitz/ros:humble",
+    "image":"ghcr.io/robinheitz/ros:<tag>",
     "workspaceFolder": "/home/ros/ros_ws",
     "workspaceMount": "source=${localWorkspaceFolder}/ros_ws/src,target=/home/ros/ros_ws/src,type=bind",
     "containerEnv": {
@@ -39,7 +40,7 @@ Copy the content into .devcontainer/devcontainer.json:
 }
 ```
 
-Make sure to get the correct tag at `image`.
+Make sure to select the needed tag, marked by `<tag>`.
 
 ## Start container
 
