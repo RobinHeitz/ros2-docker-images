@@ -3,10 +3,7 @@
     "privileged": true,
     "remoteUser": "ros",
     "containerUser": "ros",
-    "build": {
-        "dockerfile": "../noetic.Dockerfile",
-        "context": ".."
-    },
+    "image": "ghcr.io/robinheitz/ros:noetic",
     "workspaceFolder": "/home/ros/ros_ws",
     "workspaceMount": "source=${localWorkspaceFolder}/ros_ws/src,target=/home/ros/ros_ws/src,type=bind",
     "containerEnv": {
