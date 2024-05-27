@@ -35,7 +35,8 @@ Copy the content into .devcontainer/devcontainer.json:
     },
     "runArgs": [
         "--net=host",
-        "-e", "DISPLAY=${env:DISPLAY}"
+        "-e", "DISPLAY=${env:DISPLAY}",
+        "--name","ros_container"
     ]
 }
 ```
