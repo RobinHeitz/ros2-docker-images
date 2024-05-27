@@ -77,6 +77,7 @@ RUN  echo "alias cl=clear" >> /home/$USERNAME/.bashrc
 
 # ROS shortcuts
 RUN  echo "alias b='cd ${ROS_WS} && colcon build --symlink-install && source install/setup.bash'" >> /home/$USERNAME/.bashrc
+RUN  echo "alias s='cd ${ROS_WS} && source install/setup.bash'" >> /home/$USERNAME/.bashrc
 RUN  echo "alias clean='rm -r ${ROS_WS}/build ${ROS_WS}/install ${ROS_WS}/log'" >> /home/$USERNAME/.bashrc
 RUN  echo "alias depc='sudo rosdep update && sudo rosdep check --from-paths ${ROS_WS}/src --ignore-src -y'" >> /home/$USERNAME/.bashrc
 RUN  echo "alias depi='sudo rosdep update && sudo rosdep install --from-paths ${ROS_WS}/src --ignore-src -y'" >> /home/$USERNAME/.bashrc
