@@ -77,7 +77,7 @@ RUN for repo in moveit2/moveit2.repos $(f="moveit2/moveit2_$ROS_DISTRO.repos"; t
 RUN sudo rosdep update
 RUN sudo rosdep install --from-paths  /home/${USERNAME}/${ROS_WS}/src --ignore-src -y -r
 
-WORKDIR ${ROS_WS_DIR}
+WORKDIR /home/${USERNAME}/${ROS_WS}
 RUN colcon build --symlink-install
 
 RUN mkdir -p /home/${USERNAME}/${ROS_WS}/src/custom
