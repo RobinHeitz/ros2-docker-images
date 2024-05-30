@@ -1,6 +1,7 @@
 ARG ROS_DISTRO=humble
 
 FROM ros:${ROS_DISTRO}
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 ARG ROS_WS=ros_ws
 
@@ -78,7 +79,7 @@ RUN sudo rosdep update
 RUN sudo rosdep install --from-paths  /home/${USERNAME}/${ROS_WS}/src --ignore-src -y -r
 
 WORKDIR /home/${USERNAME}/${ROS_WS}
-RUN colcon build --symlink-install
+RUN source /opt/ros/${ROS_DISTRO}/setup.bash && colcon build --symlink-install
 
 RUN mkdir -p /home/${USERNAME}/${ROS_WS}/src/custom
 
