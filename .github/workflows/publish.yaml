@@ -3,7 +3,7 @@ name: Docker Image CI for ros2 Humble
 on:
   push:
     branches:
-      - main
+      - humble-moveit-src
 
 jobs:
   build_and_publish_humble:
@@ -13,7 +13,7 @@ jobs:
       - name: Build and push the image
         run: | 
           docker login --username robinheitz --password ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }} ghcr.io
-          docker build . -f humble.Dockerfile --tag ghcr.io/robinheitz/ros:humble
-          docker push ghcr.io/robinheitz/ros:humble
+          docker build . -f humble.Dockerfile --tag ghcr.io/robinheitz/ros:humble-moveit-src
+          docker push ghcr.io/robinheitz/ros:humble-moveit-src
 
 

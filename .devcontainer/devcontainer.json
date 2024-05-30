@@ -3,9 +3,13 @@
     "privileged": true,
     "remoteUser": "ros",
     "containerUser": "ros",
-    "image":"ghcr.io/robinheitz/ros:humble",
-    "workspaceFolder": "/home/ros/ros_ws",
-    "workspaceMount": "source=${localWorkspaceFolder}/ros_ws/src,target=/home/ros/ros_ws/src,type=bind",
+    // "image":"ghcr.io/robinheitz/ros:humble",
+    "build": {
+        "context": "../",
+        "dockerfile": "../humble.Dockerfile"
+    },
+    "workspaceFolder": "/home/ros/ros_ws/src/custom",
+    "workspaceMount": "source=${localWorkspaceFolder}/ros_ws/src,target=/home/ros/ros_ws/src/custom,type=bind",
     "containerEnv": {
         "DISPLAY": "unix:0",
         "ROS_LOCALHOST_ONLY": "1",

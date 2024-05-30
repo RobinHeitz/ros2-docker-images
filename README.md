@@ -12,6 +12,8 @@ Available tags:
 
 ## Setup
 
+WARNING: Due to different setups etc. there is the possibility that you need to follow the .devcontainer/devcontainer.json file in the specific branch
+
 In your project folder:
 
     mkdir -p ros_ws/src

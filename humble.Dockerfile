@@ -21,10 +21,11 @@ RUN apt-get -qq update && apt-get -qq upgrade -y && apt-get install -y \
     software-properties-common \
     python3-colcon-common-extensions \
     python3-rosdep \
+    libglew-dev \
+    ros-${ROS_DISTRO}-ros-testing \
+    ros-${ROS_DISTRO}-ament-clang-format \
     ros-${ROS_DISTRO}-rqt* \
-    ros-${ROS_DISTRO}-moveit \
-    ros-${ROS_DISTRO}-moveit-planners \
-    ros-${ROS_DISTRO}-moveit-setup-assistant \
+    ros-${ROS_DISTRO}-rqt* \
     ros-${ROS_DISTRO}-joint-state-publisher \
     ros-${ROS_DISTRO}-joint-state-publisher-gui \
     ros-${ROS_DISTRO}-ros2-control \
@@ -63,12 +64,24 @@ RUN groupadd --gid $USER_GID $USERNAME \
 
 USER ${USERNAME}
 
-RUN mkdir -p /home/${USERNAME}/${ROS_WS}/src
-
 ENV ROS_DISTRO=$ROS_DISTRO
-ENV ROS_WS=/home/${USERNAME}/${ROS_WS}
+ENV ROS_WS_DIR=/home/${USERNAME}/${ROS_WS}
+# RUN mkdir -p /home/${USERNAME}/${ROS_WS}/src
 
-RUN echo "export DISABLE_AUTO_TITLE=true" >> /home/$USERNAME/.bashrc
+# Install Moveit2 from SRC
+RUN mkdir -p ${ROS_WS_DIR}/src/moveit2
+WORKDIR ${ROS_WS_DIR}/src/moveit2
+RUN export COLCON_WS=${ROS_WS_DIR}
+RUN git clone -b $ROS_DISTRO https://github.com/moveit/moveit2.git
+RUN for repo in moveit2/moveit2.repos $(f="moveit2/moveit2_$ROS_DISTRO.repos"; test -r $f && echo $f); do vcs import < "$repo"; done
+RUN sudo rosdep update
+RUN sudo rosdep install --from-paths  /home/${USERNAME}/${ROS_WS}/src --ignore-src -y -r
+
+WORKDIR ${ROS_WS_DIR}
+RUN colcon build --symlink-install
+
+RUN mkdir ${ROS_WS_DIR}/src/custom
+
 RUN echo 'LC_NUMERIC="en_US.UTF-8"' >> /home/$USERNAME/.bashrc
 
 # Some shortcuts
