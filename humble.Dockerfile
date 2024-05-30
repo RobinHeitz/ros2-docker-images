@@ -65,13 +65,13 @@ RUN groupadd --gid $USER_GID $USERNAME \
 USER ${USERNAME}
 
 ENV ROS_DISTRO=$ROS_DISTRO
-ENV ROS_WS_DIR=/home/${USERNAME}/${ROS_WS}
+# ENV ROS_WS_DIR=/home/${USERNAME}/${ROS_WS}
 # RUN mkdir -p /home/${USERNAME}/${ROS_WS}/src
 
 # Install Moveit2 from SRC
-RUN mkdir -p ${ROS_WS_DIR}/src/moveit2
-WORKDIR ${ROS_WS_DIR}/src/moveit2
-RUN export COLCON_WS=${ROS_WS_DIR}
+RUN mkdir -p /home/${USERNAME}/${ROS_WS}/src
+WORKDIR /home/${USERNAME}/${ROS_WS}/src
+RUN export COLCON_WS=/home/${USERNAME}/${ROS_WS}
 RUN git clone -b $ROS_DISTRO https://github.com/moveit/moveit2.git
 RUN for repo in moveit2/moveit2.repos $(f="moveit2/moveit2_$ROS_DISTRO.repos"; test -r $f && echo $f); do vcs import < "$repo"; done
 RUN sudo rosdep update
@@ -80,7 +80,7 @@ RUN sudo rosdep install --from-paths  /home/${USERNAME}/${ROS_WS}/src --ignore-s
 WORKDIR ${ROS_WS_DIR}
 RUN colcon build --symlink-install
 
-RUN mkdir ${ROS_WS_DIR}/src/custom
+RUN mkdir -p /home/${USERNAME}/${ROS_WS}/src/custom
 
 RUN echo 'LC_NUMERIC="en_US.UTF-8"' >> /home/$USERNAME/.bashrc
 
