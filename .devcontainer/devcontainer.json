@@ -3,7 +3,7 @@
     "privileged": true,
     "remoteUser": "ros",
     "containerUser": "ros",
-    // "image":"ghcr.io/robinheitz/ros:humble",
+    // "image":"ghcr.io/robinheitz/ros:humble-moveit-src",
     "build": {
         "context": "../",
         "dockerfile": "../humble.Dockerfile"
