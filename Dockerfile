@@ -23,17 +23,20 @@ RUN apt-get -qq update && apt-get -qq upgrade -y && apt-get install -y \
     software-properties-common \
     python3-colcon-common-extensions \
     python3-rosdep \
-    ros-${ROS_DISTRO}-rqt* \
-    ros-${ROS_DISTRO}-moveit \
-    ros-${ROS_DISTRO}-moveit-planners \
-    ros-${ROS_DISTRO}-moveit-setup-assistant \
-    ros-${ROS_DISTRO}-joint-state-publisher \
-    ros-${ROS_DISTRO}-joint-state-publisher-gui \
     ros-${ROS_DISTRO}-ros2-control \
     ros-${ROS_DISTRO}-ros2-controllers \
-    ros-${ROS_DISTRO}-ur \
-    ros-${ROS_DISTRO}-gazebo-ros-pkgs \
-    ros-${ROS_DISTRO}-gazebo-ros2-control
+    ros-${ROS_DISTRO}-rqt* 
+
+# RUN apt-get -qq update && apt-get -qq upgrade -y && apt-get install -y \
+#     ros-${ROS_DISTRO}-moveit \
+#     ros-${ROS_DISTRO}-moveit-planners \
+#     ros-${ROS_DISTRO}-moveit-setup-assistant \
+#     ros-${ROS_DISTRO}-joint-state-publisher \
+#     ros-${ROS_DISTRO}-joint-state-publisher-gui \
+
+#     ros-${ROS_DISTRO}-ur \
+#     ros-${ROS_DISTRO}-gazebo-ros-pkgs \
+#     ros-${ROS_DISTRO}-gazebo-ros2-control
 
 RUN rm -rf /var/lib/apt/lists/*
 
