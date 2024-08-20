@@ -1,6 +1,8 @@
-ARG ROS_DISTRO=humble
+ARG ROS_DISTRO=jazzy
 
 FROM ros:${ROS_DISTRO}
+
+RUN userdel -r ubuntu 
 
 ARG ROS_WS=ros_ws
 

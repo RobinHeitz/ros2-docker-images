@@ -1,19 +1,17 @@
-name: Docker Image CI for ros2 Humble
+name: Docker Image CI for ros2 jazzy
 
 on:
   push:
     branches:
-      - main
+      - jazzy
 
 jobs:
-  build_and_publish_humble:
+  build_and_publish_jazzy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Build and push the image
-        run: | 
+        run: |
           docker login --username robinheitz --password ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }} ghcr.io
-          docker build . -f humble.Dockerfile --tag ghcr.io/robinheitz/ros:humble
-          docker push ghcr.io/robinheitz/ros:humble
-
-
+          docker build . -f Dockerfile --tag ghcr.io/robinheitz/ros:jazzy
+          docker push ghcr.io/robinheitz/ros:jazzy
