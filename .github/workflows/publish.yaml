@@ -1,9 +1,9 @@
-name: Docker Image CI for ros2 Humble
+name: Docker Image CI for ros2 Humble on M1 Mac
 
 on:
   push:
     branches:
-      - main
+      - m1-humble
 
 jobs:
   build_and_publish_humble:
@@ -11,9 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build and push the image
-        run: | 
+        run: |
           docker login --username robinheitz --password ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }} ghcr.io
-          docker build . -f humble.Dockerfile --tag ghcr.io/robinheitz/ros:humble
-          docker push ghcr.io/robinheitz/ros:humble
-
-
+          docker build . --tag ghcr.io/robinheitz/ros:m1-humble
+          docker push ghcr.io/robinheitz/ros:m1-humble
